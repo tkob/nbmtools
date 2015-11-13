@@ -1,0 +1,27 @@
+*[File]: java.io.File
+*[ZipFile]: java.util.zip.ZipFile
+*[ZipUtils]: nbmtools.ZipUtils
+
+# Test: identity mapToFile
+
+# Setup
+
+Let url = `getClass().getResource("/nbmtools/zip1.zip")`.
+
+Let fromFile = `new File(url.toURI())`.
+
+Let zipFile = `new ZipFile(fromFile)`.
+
+Let toFile = `File.createTempFile("test", ".zip")`.
+
+# Exercise: identity map
+
+Do `ZipUtils.mapToFile({ println it; it }, zipFile, toFile)`.
+
+# Verify
+
+Assert that `toFile.length()` is not `0L`.
+
+# Teardown
+
+Do `toFile.delete()`.
