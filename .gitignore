@@ -23,3 +23,6 @@ build/
 # IntelliJ IDEA
 .idea/
 *.iml
+
+# NetBeans Gradle
+/.nb-gradle/
