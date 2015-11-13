@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -33,6 +34,23 @@ public class ZipUtils {
         public void close() throws IOException {
             inputStream.close();
         }
+    }
+
+    public static <T> T fold(
+            BiFunction<Entry, T, T> f,
+            T init,
+            ZipFile zipFile)
+            throws IOException {
+        T result = init;
+        List<ZipEntry> zipEntries = EnumerationUtils.toList(zipFile.entries());
+        for (ZipEntry zipEntry : zipEntries) {
+            Entry entry = zipEntry.isDirectory()
+                    ? new DirEntry(zipEntry)
+                    : new FileEntry(
+                            zipEntry, zipFile.getInputStream(zipEntry));
+            result = f.apply(entry, result);
+        }
+        return result;
     }
 
     public static ZipFile mapToFile(
