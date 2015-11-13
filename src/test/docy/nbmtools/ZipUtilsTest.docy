@@ -25,3 +25,25 @@ Assert that `toFile.length()` is not `0L`.
 ## Teardown
 
 Do `toFile.delete()`.
+
+# Test: fold zip file to list of zip entries
+
+## Setup
+
+Let url = `getClass().getResource("/nbmtools/zip1.zip")`.
+
+Let zipFile = `new ZipFile(new File(url.toURI()))`.
+
+Let f = `{ ZipUtils.Entry entry, List list ->
+             def zipEntry = entry.zipEntry
+             list.add([ zipEntry.name, zipEntry.size, zipEntry.crc ])
+             list }`.
+
+Let expected = `[
+    [ "dir1/file1.txt", 13L, 3658254147L],
+    [ "file2.txt",      13L, 3816930182L],
+]`.
+
+## Verify
+
+Assert that `ZipUtils.fold(f, [], zipFile)` is `expected`.
