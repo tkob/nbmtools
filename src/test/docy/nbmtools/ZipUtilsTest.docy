@@ -4,7 +4,7 @@
 
 # Test: identity mapToFile
 
-# Setup
+## Setup
 
 Let url = `getClass().getResource("/nbmtools/zip1.zip")`.
 
@@ -14,14 +14,14 @@ Let zipFile = `new ZipFile(fromFile)`.
 
 Let toFile = `File.createTempFile("test", ".zip")`.
 
-# Exercise: identity map
+## Exercise: identity map
 
 Do `ZipUtils.mapToFile({ println it; it }, zipFile, toFile)`.
 
-# Verify
+## Verify
 
 Assert that `toFile.length()` is not `0L`.
 
-# Teardown
+## Teardown
 
 Do `toFile.delete()`.
