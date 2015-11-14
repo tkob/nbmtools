@@ -1,10 +1,27 @@
 package nbmtools
 
+import java.io.IOException
 import java.io.InputStream
 import java.net.URI
 import scala.io.BufferedSource
 
-case class External(crc: Option[Long], urls: List[URI])
+case class External(crc: Option[Long], urls: List[URI]) {
+    def openStream() = {
+        def tryUrls(urls: List[URI]): InputStream = {
+            urls match {
+                case Nil =>
+                    throw new IOException("cannot open any URL: " + urls.toString)
+                case (url::urls) =>
+                    try {
+                        url.toURL.openStream
+                    } catch {
+                        case e: IOException => tryUrls(urls)
+                    }
+            }
+        }
+        tryUrls(urls)
+    }
+}
 
 object concatWithColon {
     def apply(prefix: String, s: String): String = prefix + ":" + s
