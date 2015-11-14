@@ -1,5 +1,6 @@
 package nbmtools
 
+import java.io.ByteArrayInputStream
 import nbmtools.ZipUtils.Entry
 import org.apache.commons.io.IOUtils
 
@@ -19,6 +20,16 @@ case class FileEntry(
             this(name, content, time, None, None)
         def this(name: String, content: Array[Byte]) =
             this(name, content, 0L, None, None)
+
+        def getZipEntry(): java.util.zip.ZipEntry = {
+            val zipEntry = new java.util.zip.ZipEntry(name)
+            zipEntry.setTime(time)
+            zipEntry.setComment(comment.getOrElse(null))
+            zipEntry.setExtra(extra.map(_.toArray).getOrElse(null))
+            zipEntry
+        }
+
+        def getInputStream() = new ByteArrayInputStream(content.toArray)
     }
 
 object ZipEntry {
