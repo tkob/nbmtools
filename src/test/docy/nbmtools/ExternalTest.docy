@@ -10,4 +10,6 @@ Assert that `concatWithColon.unapply("A:").toString()` is "Some((A,))".
 
 Assert that `concatWithColon.unapply(":B").toString()` is "Some((,B))".
 
+Assert that `concatWithColon.unapply("A::B").toString()` is "Some((A,:B))".
+
 Assert that `concatWithColon.unapply("A").toString()` is "None".
