@@ -1,5 +1,9 @@
 package nbmtools
 
+import java.net.URI
+
+case class External(crc: Option[Long], urls: List[URI])
+
 object concatWithColon {
     def apply(prefix: String, s: String): String = prefix + ":" + s
     def unapply(s: String): Option[(String, String)] = {
