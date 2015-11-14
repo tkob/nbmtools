@@ -49,3 +49,31 @@ CRC:123
 URL:http://www1.example.com/
 URL:http://www2.example.com/
 ```
+
+# Test: openStream succeeds if the URL is valid
+
+Assert that `IOUtils.toString(ext.openStream())` is "content of text1"
+where uri = `getClass().getResource("/nbmtools/text1.txt").toURI()`
+and urlList = `JC.asScalaBuffer([uri]).toList()`
+and ext = `External.apply(Some.apply(0L), urlList)`.
+
+# Test: openStream fails if there are no URLs
+
+Assert that `ext.openStream()` throws an instance of `java.io.IOException`
+where urlList = `JC.asScalaBuffer([]).toList()`
+and ext = `External.apply(Some.apply(0L), urlList)`.
+
+# Test: openStream fails if the URL is invalid
+
+Assert that `ext.openStream()` throws an instance of `java.io.IOException`
+where uri = `new URI("file://nosuchuri")`
+and urlList = `JC.asScalaBuffer([uri]).toList()`
+and ext = `External.apply(Some.apply(0L), urlList)`.
+
+# Test: openStream succeeds if the second URL is valid
+
+Assert that `IOUtils.toString(ext.openStream())` is "content of text1"
+where uri1 = `new URI("file://nosuchuri")`
+and uri2 = `getClass().getResource("/nbmtools/text1.txt").toURI()`
+and urlList = `JC.asScalaBuffer([uri1, uri2]).toList()`
+and ext = `External.apply(Some.apply(0L), urlList)`.
