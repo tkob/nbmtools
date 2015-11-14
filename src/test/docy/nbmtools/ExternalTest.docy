@@ -1,4 +1,9 @@
+*[URI]: java.net.URI
+*[IOUtils]: org.apache.commons.io.IOUtils
+*[External]: nbmtools.External
 *[concatWithColon]: nbmtools.concatWithColon
+*[Some]: scala.Some
+*[JC]: scala.collection.JavaConversions
 
 # Test: concatWithColon.unapply
 
@@ -13,3 +18,34 @@ Assert that `concatWithColon.unapply(":B").toString()` is "Some((,B))".
 Assert that `concatWithColon.unapply("A::B").toString()` is "Some((A,:B))".
 
 Assert that `concatWithColon.unapply("A").toString()` is "None".
+
+# Test: External.from InputStream 1
+
+Assert that `External.from(ins)` is `External.apply(Some.apply(123L), urlList)`
+where external = [CRC and one URL]
+and ins = `IOUtils.toInputStream(external, "UTF-8")`
+and urls = `[new URI("http://example.com/")]`
+and urlList = `JC.asScalaBuffer(urls).toList()`.
+
+### CRC and one URL
+
+```
+CRC:123
+URL:http://example.com/
+```
+
+# Test: External.from InputStream 2
+
+Assert that `External.from(ins)` is `External.apply(Some.apply(123L), urlList)`
+where external = [CRC and two URLs]
+and ins = `IOUtils.toInputStream(external, "UTF-8")`
+and urls = `[new URI("http://www1.example.com/"), new URI("http://www2.example.com/")]`
+and urlList = `JC.asScalaBuffer(urls).toList()`.
+
+### CRC and two URLs
+
+```
+CRC:123
+URL:http://www1.example.com/
+URL:http://www2.example.com/
+```
