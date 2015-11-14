@@ -6,11 +6,11 @@ import org.apache.commons.io.IOUtils
 sealed trait ZipEntry
 
 case class DirEntry(
-    name: String, time: Long, comment: String, extra: Seq[Byte])
+    name: String, time: Long, comment: Option[String], extra: Option[Seq[Byte]])
     extends ZipEntry
 
 case class FileEntry(
-    name: String, content: Seq[Byte], time: Long, comment: String, extra: Seq[Byte])
+    name: String, content: Seq[Byte], time: Long, comment: Option[String], extra: Option[Seq[Byte]])
     extends ZipEntry
 
 object ZipEntry {
@@ -22,7 +22,7 @@ object ZipEntry {
                     val time = zipEntry.getTime
                     val comment = zipEntry.getComment
                     val extra: Seq[Byte] = zipEntry.getExtra
-                    DirEntry(name, time, comment, extra)
+                    DirEntry(name, time, Option(comment), Option(extra))
             }
             case (entry: ZipUtils.FileEntry) => {
                     val zipEntry = entry.getZipEntry
@@ -32,7 +32,7 @@ object ZipEntry {
                     val extra: Seq[Byte] = zipEntry.getExtra
                     val content: Seq[Byte] =
                         IOUtils.toByteArray(entry.getInputStream)
-                    FileEntry(name, content, time, comment, extra)
+                    FileEntry(name, content, time, Option(comment), Option(extra))
             }
         }
     }
