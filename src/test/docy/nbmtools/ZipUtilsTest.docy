@@ -1,5 +1,6 @@
 *[File]: java.io.File
 *[ZipFile]: java.util.zip.ZipFile
+*[ZipInputStream]: java.util.zip.ZipInputStream
 *[ZipUtils]: nbmtools.ZipUtils
 
 # Test: identity mapToFile
@@ -47,3 +48,25 @@ Let expected = `[
 ## Verify
 
 Assert that `ZipUtils.fold(f, [], zipFile)` is `expected`.
+
+# Test: fold zip stream to list of zip entries
+
+## Setup
+
+Let ins = `getClass().getResourceAsStream("/nbmtools/zip1.zip")`.
+
+Let zis = `new ZipInputStream(ins)`.
+
+Let f = `{ ZipUtils.Entry entry, List list ->
+             def zipEntry = entry.zipEntry
+             list.add([ zipEntry.name, zipEntry.size, zipEntry.crc ])
+             list }`.
+
+Let expected = `[
+    [ "dir1/file1.txt", 13L, 3658254147L],
+    [ "file2.txt",      13L, 3816930182L],
+]`.
+
+## Verify
+
+Assert that `ZipUtils.fold(f, [], zis)` is `expected`.

@@ -10,6 +10,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 import lombok.Value;
 import org.apache.commons.collections4.EnumerationUtils;
@@ -34,6 +35,23 @@ public class ZipUtils {
         public void close() throws IOException {
             inputStream.close();
         }
+    }
+
+    public static <T> T fold(
+            BiFunction<Entry, T, T> f,
+            T init,
+            ZipInputStream zis)
+            throws IOException {
+        T result = init;
+        for (ZipEntry zipEntry = zis.getNextEntry();
+                zipEntry != null;
+                zipEntry = zis.getNextEntry()) {
+            Entry entry = zipEntry.isDirectory()
+                    ? new DirEntry(zipEntry)
+                    : new FileEntry(zipEntry, zis);
+            result = f.apply(entry, result);
+        }
+        return result;
     }
 
     public static <T> T fold(
