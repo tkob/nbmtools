@@ -7,11 +7,19 @@ sealed trait ZipEntry
 
 case class DirEntry(
     name: String, time: Long, comment: Option[String], extra: Option[Seq[Byte]])
-    extends ZipEntry
+    extends ZipEntry {
+        def this(name: String, time: Long) = this(name, time, None, None)
+        def this(name: String) = this(name, 0L, None, None)
+    }
 
 case class FileEntry(
     name: String, content: Seq[Byte], time: Long, comment: Option[String], extra: Option[Seq[Byte]])
-    extends ZipEntry
+    extends ZipEntry {
+        def this(name: String, content: Array[Byte], time: Long) =
+            this(name, content, time, None, None)
+        def this(name: String, content: Array[Byte]) =
+            this(name, content, 0L, None, None)
+    }
 
 object ZipEntry {
     def of(entry: Entry): ZipEntry = {
