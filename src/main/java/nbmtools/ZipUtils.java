@@ -98,4 +98,16 @@ public class ZipUtils {
             zos.finish();
         }
     }
+
+    public static void copy(ZipInputStream zis, ZipOutputStream zos)
+            throws IOException {
+        for (ZipEntry zipEntry = zis.getNextEntry();
+                zipEntry != null;
+                zipEntry = zis.getNextEntry()) {
+            zos.putNextEntry(zipEntry);
+            if (!zipEntry.isDirectory()) {
+                IOUtils.copy(zis, zos);
+            }
+        }
+    }
 }
