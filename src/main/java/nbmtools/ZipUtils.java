@@ -71,7 +71,7 @@ public class ZipUtils {
         return result;
     }
 
-    public static ZipFile mapToFile(
+    public static void mapToFile(
             Function<Entry, Entry> f,
             ZipFile zipFile,
             File toFile)
@@ -97,6 +97,5 @@ public class ZipUtils {
             }
             zos.finish();
         }
-        return new ZipFile(toFile);
     }
 }
