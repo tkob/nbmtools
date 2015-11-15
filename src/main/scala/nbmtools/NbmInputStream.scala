@@ -17,18 +17,20 @@ class NbmInputStream(is: InputStream) extends ZipInputStream(is) {
 
     override def getNextEntry() = {
         val originalEntry = super.getNextEntry
-        originalEntry.getName match {
-            case appendExternal(name) => {
-                    val external = External.from(this)
-                    externalStream = Some(external.openStream())
-                    val entry = createZipEntry(name)
-                    entry
+        if (originalEntry == null) null
+        else
+            originalEntry.getName match {
+                case appendExternal(name) => {
+                        val external = External.from(this)
+                        externalStream = Some(external.openStream())
+                        val entry = createZipEntry(name)
+                        entry
+                }
+                case name => {
+                        externalStream = None
+                        originalEntry
+                }
             }
-            case name => {
-                    externalStream = None
-                    originalEntry
-            }
-        }
     }
 
     override def read(b: Array[Byte], off: Int, len: Int): Int = {
