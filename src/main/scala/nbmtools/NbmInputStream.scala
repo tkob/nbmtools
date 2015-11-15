@@ -19,8 +19,8 @@ class NbmInputStream(is: InputStream) extends ZipInputStream(is) {
         val originalEntry = super.getNextEntry
         originalEntry.getName match {
             case appendExternal(name) => {
-                    val external = ???
-                    // val externalSteam = ??? // TODO
+                    val external = External.from(this)
+                    externalStream = Some(external.openStream())
                     val entry = createZipEntry(name)
                     entry
             }
