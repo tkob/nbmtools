@@ -1,6 +1,8 @@
 *[File]: java.io.File
 *[ZipFile]: java.util.zip.ZipFile
 *[ZipInputStream]: java.util.zip.ZipInputStream
+*[ZipOutputStream]: java.util.zip.ZipOutputStream
+*[NbmUtils]: nbmtools.NbmUtils
 *[ZipUtils]: nbmtools.ZipUtils
 
 # Test: identity mapToFile
@@ -68,3 +70,28 @@ Let expected = `[
 ## Verify
 
 Assert that `ZipUtils.fold(f, [], zis)` is `expected`.
+
+# Test: copying a zip file creates a new zip file with same contents
+
+## Setup
+
+Let fromFile = `new File(getClass().getResource("/nbmtools/zip1.zip").toURI())`.
+
+Let toFile = `File.createTempFile("ZipUtilsTest-copy-to", ".zip")`.
+
+Let zis = `new ZipInputStream(new FileInputStream(fromFile))`
+and zos = `new ZipOutputStream(new FileOutputStream(toFile))`.
+
+Do `toFile.deleteOnExit()`.
+
+## Exercise
+
+Do `ZipUtils.copy(zis, zos)`.  
+
+Do `zis.close(); zos.close()`.
+
+## Verify
+
+Assert that `fromContents` is `toContents` where
+    fromContents = `NbmUtils.toZipEntryList(new ZipFile(fromFile))`
+and toContents = `NbmUtils.toZipEntryList(new ZipFile(toFile))`.
