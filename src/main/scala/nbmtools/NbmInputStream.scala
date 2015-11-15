@@ -1,5 +1,7 @@
 package nbmtools
 
+import java.io.File
+import java.io.FileInputStream
 import java.io.InputStream
 import java.util.zip.ZipInputStream
 
@@ -14,6 +16,8 @@ object appendExternal {
 
 class NbmInputStream(is: InputStream) extends ZipInputStream(is) {
     private var externalStream: Option[InputStream] = None
+
+    def this(file: File) = { this(new FileInputStream(file)) }
 
     override def getNextEntry() = {
         val originalEntry = super.getNextEntry
