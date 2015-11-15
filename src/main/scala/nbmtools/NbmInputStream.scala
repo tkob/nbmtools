@@ -19,7 +19,15 @@ class NbmInputStream(is: InputStream) extends ZipInputStream(is) {
 
     def this(file: File) = { this(new FileInputStream(file)) }
 
+    private def closeExternalStream() {
+        externalStream match {
+            case Some(es) => es.close()
+            case None => ()
+        }
+    }
+
     override def getNextEntry() = {
+        closeExternalStream()
         val originalEntry = super.getNextEntry
         if (originalEntry == null) null
         else
@@ -42,5 +50,10 @@ class NbmInputStream(is: InputStream) extends ZipInputStream(is) {
             case None => super.read(b, off, len)
             case Some(es) => es.read(b, off, len)
         }
+    }
+
+    override def close() {
+        closeExternalStream()
+        super.close()
     }
 }
