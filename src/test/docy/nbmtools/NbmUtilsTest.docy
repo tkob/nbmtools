@@ -15,6 +15,8 @@ Let entryList = `NbmUtils.toZipEntryList(zipFile)`.
 
 Let toFile = `File.createTempFile("test", ".zip")`.
 
+Do `toFile.deleteOnExit()`.
+
 ## Exercise
 
 Do `ZipUtils.mapToFile({ it }, zipFile, toFile)`.
@@ -22,7 +24,3 @@ Do `ZipUtils.mapToFile({ it }, zipFile, toFile)`.
 ## Verify
 
 Assert that `NbmUtils.toZipEntryList(new ZipFile(toFile))` is `entryList`.
-
-## Teardown
-
-Do `toFile.delete()`.
