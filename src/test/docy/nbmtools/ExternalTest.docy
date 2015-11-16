@@ -23,10 +23,9 @@ Assert that `concatWithColon.unapply("A").toString()` is "None".
 
 # Test: External.from InputStream 1
 
-Assert that `External.from(ins)` is `External.apply(Some.apply(123L), urlList)`
+Assert that `External.from(ins)` is `External.apply(Some.apply(123L), uris)`
 where ins = [CRC and one URL] as `InputStream`
-and urls = `[new URI("http://example.com/")]`
-and urlList = `JC.asScalaBuffer(urls).toList()`.
+and uris = `TestUtils.uris(["http://example.com/"])`.
 
 ### CRC and one URL
 
@@ -37,10 +36,9 @@ URL:http://example.com/
 
 # Test: External.from InputStream 2
 
-Assert that `External.from(ins)` is `External.apply(Some.apply(123L), urlList)`
+Assert that `External.from(ins)` is `External.apply(Some.apply(123L), uris)`
 where ins = [CRC and two URLs] as `InputStream`
-and urls = `[new URI("http://www1.example.com/"), new URI("http://www2.example.com/")]`
-and urlList = `JC.asScalaBuffer(urls).toList()`.
+and uris = `TestUtils.uris(["http://www1.example.com/", "http://www2.example.com/"])`.
 
 ### CRC and two URLs
 
