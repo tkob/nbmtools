@@ -23,7 +23,7 @@ Assert that `concatWithColon.unapply("A").toString()` is "None".
 
 # Test: External.from InputStream 1
 
-Assert that `External.from(ins)` is `External.apply(Some.apply(123L), uris)`
+Assert that `External.from(ins)` is `new External(new Some(123L), uris)`
 where ins = [CRC and one URL] as `InputStream`
 and uris = `TestUtils.uris(["http://example.com/"])`.
 
@@ -36,7 +36,7 @@ URL:http://example.com/
 
 # Test: External.from InputStream 2
 
-Assert that `External.from(ins)` is `External.apply(Some.apply(123L), uris)`
+Assert that `External.from(ins)` is `new External(new Some(123L), uris)`
 where ins = [CRC and two URLs] as `InputStream`
 and uris = `TestUtils.uris(["http://www1.example.com/", "http://www2.example.com/"])`.
 
@@ -52,22 +52,22 @@ URL:http://www2.example.com/
 
 Assert that `IOUtils.toString(ext.openStream())` is "content of text1"
 where url = `getClass().getResource("/nbmtools/text1.txt").toString()`
-and ext = `External.apply(Some.apply(0L), TestUtils.uris([url]))`.
+and ext = `new External(new Some(0L), TestUtils.uris([url]))`.
 
 # Test: openStream fails if there are no URLs
 
 Assert that `ext.openStream()` throws an instance of `java.io.IOException`
-where ext = `External.apply(Some.apply(0L), TestUtils.uris([]))`.
+where ext = `new External(new Some(0L), TestUtils.uris([]))`.
 
 # Test: openStream fails if the URL is invalid
 
 Assert that `ext.openStream()` throws an instance of `java.io.IOException`
 where uris = `TestUtils.uris(["file://nosuchuri"])`
-and ext = `External.apply(Some.apply(0L), uris)`.
+and ext = `new External(new Some(0L), uris)`.
 
 # Test: openStream succeeds if the second URL is valid
 
 Assert that `IOUtils.toString(ext.openStream())` is "content of text1"
 where url1 = "file://nosuchuri"
 and url2 = `getClass().getResource("/nbmtools/text1.txt").toString()`
-and ext = `External.apply(Some.apply(0L), TestUtils.uris([url1, url2]))`.
+and ext = `new External(new Some(0L), TestUtils.uris([url1, url2]))`.
