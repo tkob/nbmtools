@@ -19,6 +19,11 @@ public class TestUtils {
         return IOUtils.toInputStream(s, "UTF-8");
     }
 
+    @As
+    public static URI asURI(String s) {
+        return URI.create(s);
+    }
+
     public static scala.collection.immutable.List<URI> uris(List<String> urls) {
         List<URI> uris =
                 urls.stream().map(URI::create).collect(Collectors.toList());
