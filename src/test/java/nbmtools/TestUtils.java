@@ -14,12 +14,10 @@ import yokohama.unit.annotations.As;
 
 @As
 public class TestUtils {
-    @As
     public static InputStream asInputStream(String s) throws IOException {
         return IOUtils.toInputStream(s, "UTF-8");
     }
 
-    @As
     public static URI asURI(String s) {
         return URI.create(s);
     }
