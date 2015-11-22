@@ -7,7 +7,7 @@ object Main {
         val status: Option[Int] = for {
             cmdName <- args.headOption
             cmd <- commands.get(cmdName)
-        } yield cmd.run(System.in, System.out, System.err, args:_*)
+        } yield cmd.run(System.in, System.out, System.err, args.tail:_*)
         
         System.exit(status.getOrElse(Command.EXIT_FAILURE))
     }
