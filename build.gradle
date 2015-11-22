@@ -37,6 +37,7 @@ dependencies {
     testCompile 'org.scalatest:scalatest_2.11:2.2.5'
     testRuntime 'org.scala-lang.modules:scala-xml_2.11:1.0.5'
     testCompile 'org.codehaus.groovy:groovy-all:2.3.7'
+    testCompile 'org.mockito:mockito-all:1.10.8'
     compile 'yokohama.unit:yokohamaunit-annotations:0.2.1'
 }
 
