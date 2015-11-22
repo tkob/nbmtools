@@ -69,6 +69,7 @@ task compileDocy << {
     main.run(System.in, System.out, System.err, ext.args as String[])
 }
 compileDocy.dependsOn compileTestJava
+compileDocy.dependsOn compileTestScala
 test.dependsOn compileDocy
 
 task groovyConsole(dependsOn: 'classes', type: JavaExec) {
