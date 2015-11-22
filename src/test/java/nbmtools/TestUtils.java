@@ -5,8 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.zip.ZipOutputStream;
 import org.apache.commons.io.IOUtils;
 import scala.collection.JavaConversions;
@@ -18,14 +18,19 @@ public class TestUtils {
         return IOUtils.toInputStream(s, "UTF-8");
     }
 
+    @As
     public static URI asURI(String s) {
         return URI.create(s);
     }
 
-    public static scala.collection.immutable.List<URI> uris(List<String> urls) {
-        List<URI> uris =
-                urls.stream().map(URI::create).collect(Collectors.toList());
-        return JavaConversions.asScalaBuffer(uris).toList();
+    @As
+    public static <T> scala.collection.immutable.List<T> asScalaList(ArrayList<T> list) {
+        return JavaConversions.asScalaBuffer(list).toList();
+    }
+
+    @As
+    public static String inputStreamAsString(InputStream is) throws IOException {
+        return IOUtils.toString(is, "UTF-8");
     }
 
     public static void createZipFile(File file, List<ZipEntry> entries)

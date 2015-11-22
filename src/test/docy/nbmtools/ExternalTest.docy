@@ -1,10 +1,9 @@
 *[URI]: java.net.URI
 *[InputStream]: java.io.InputStream
-*[IOUtils]: org.apache.commons.io.IOUtils
 *[External]: nbmtools.External
 *[concatWithColon]: nbmtools.concatWithColon
 *[Some]: scala.Some
-*[JC]: scala.collection.JavaConversions
+*[ScalaList]: scala.collection.immutable.List
 *[TestUtils]: nbmtools.TestUtils
 
 # Test: concatWithColon.unapply
@@ -25,7 +24,7 @@ Assert that `concatWithColon.unapply("A").toString()` is "None".
 
 Assert that `External.from(ins)` is `new External(new Some(123L), uris)`
 where ins = [CRC and one URL] as `InputStream`
-and uris = `TestUtils.uris(["http://example.com/"])`.
+and uris = `["http://example.com/" as URI] as ScalaList`.
 
 ### CRC and one URL
 
@@ -38,7 +37,7 @@ URL:http://example.com/
 
 Assert that `External.from(ins)` is `new External(new Some(123L), uris)`
 where ins = [CRC and two URLs] as `InputStream`
-and uris = `TestUtils.uris(["http://www1.example.com/", "http://www2.example.com/"])`.
+and uris = `["http://www1.example.com/" as URI, "http://www2.example.com/" as URI] as ScalaList`.
 
 ### CRC and two URLs
 
@@ -50,24 +49,24 @@ URL:http://www2.example.com/
 
 # Test: openStream succeeds if the URL is valid
 
-Assert that `IOUtils.toString(ext.openStream())` is "content of text1"
-where url = `getClass().getResource("/nbmtools/text1.txt").toString()`
-and ext = `new External(new Some(0L), TestUtils.uris([url]))`.
+Assert that `ext.openStream() as String` is "content of text1"
+where uri = `getClass().getResource("/nbmtools/text1.txt").toURI()`
+and ext = `new External(new Some(0L), [uri] as ScalaList)`.
 
 # Test: openStream fails if there are no URLs
 
 Assert that `ext.openStream()` throws an instance of `java.io.IOException`
-where ext = `new External(new Some(0L), TestUtils.uris([]))`.
+where ext = `new External(new Some(0L), [] as ScalaList)`.
 
 # Test: openStream fails if the URL is invalid
 
 Assert that `ext.openStream()` throws an instance of `java.io.IOException`
-where uris = `TestUtils.uris(["file://nosuchuri"])`
+where uris = `["file://nosuchuri" as URI] as ScalaList`
 and ext = `new External(new Some(0L), uris)`.
 
 # Test: openStream succeeds if the second URL is valid
 
-Assert that `IOUtils.toString(ext.openStream())` is "content of text1"
-where url1 = "file://nosuchuri"
-and url2 = `getClass().getResource("/nbmtools/text1.txt").toString()`
-and ext = `new External(new Some(0L), TestUtils.uris([url1, url2]))`.
+Assert that `ext.openStream() as String` is "content of text1"
+where url1 = `"file://nosuchuri" as URI`
+and url2 = `getClass().getResource("/nbmtools/text1.txt").toURI()`
+and ext = `new External(new Some(0L), [url1, url2] as ScalaList)`.
