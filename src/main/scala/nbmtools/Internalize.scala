@@ -22,22 +22,21 @@ class Internalize extends Command {
         try { block } finally { resource.close }
 
     override def run(
-        in: InputStream, out: PrintStream, err: PrintStream, args: String*) = {
-        val status: Try[Int] = for {
+        in: InputStream, out: PrintStream, err: PrintStream, args: String*): Int = {
+        val names: Try[(String, String)] = for {
             fromName <- Try(args(0))
             toName <- Try(args(1))
-        } yield {
-            using(new NbmInputStream(openIn(fromName))) { fromStream =>
-            using(new FileOutputStream(toName)) { toStream =>
-                IOUtils.copy(fromStream, toStream)
-            }}
-            Command.EXIT_SUCCESS
-        }
-       status match {
-            case Success(status) => status
-            case Failure(_)  => {
-                    err.println("too few arguments")
-                    Command.EXIT_FAILURE
+        } yield (fromName, toName) 
+        names match {
+            case Failure(_) =>
+                err.println("too few arguments")
+                Command.EXIT_FAILURE
+            case Success((fromName, toName)) => {
+                using(new NbmInputStream(openIn(fromName))) { fromStream =>
+                using(new FileOutputStream(toName)) { toStream =>
+                    IOUtils.copy(fromStream, toStream)
+                }}
+                Command.EXIT_SUCCESS
             }
         }
     }
