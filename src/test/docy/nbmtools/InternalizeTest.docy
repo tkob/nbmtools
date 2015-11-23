@@ -21,7 +21,7 @@ Do `toFile.deleteOnExit()`.
 
 Assert `command.run(ins, out, err, fromURL, toFile.path)` is `Command.EXIT_SUCCESS`.
 
-Assert `toFile.length()` is not 0.
+Assert `toFile.length()` is not 0L.
 
 # Test: Too few arguments
 
