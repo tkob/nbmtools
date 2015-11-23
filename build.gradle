@@ -11,6 +11,7 @@ buildscript {
 apply plugin: 'scala'
 apply plugin: 'application'
 
+version = '0.1.0'
 mainClassName = 'nbmtools.Main'
 
 sourceCompatibility = '1.8'
