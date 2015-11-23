@@ -33,7 +33,7 @@ dependencies {
     compile 'commons-io:commons-io:2.4'
     compile 'org.apache.commons:commons-collections4:4.0'
 
-    testCompile 'junit:junit:4.12'
+    testCompile 'junit:junit:4.10'
     testCompile 'org.scalatest:scalatest_2.11:2.2.5'
     testRuntime 'org.scala-lang.modules:scala-xml_2.11:1.0.5'
     testCompile 'org.codehaus.groovy:groovy-all:2.3.7'
