@@ -1,6 +1,27 @@
+*[File]: java.io.File
 *[StubPrintStream]: nbmtools.StubPrintStream
 *[Command]: nbmtools.Command
 *[Internalize]: nbmtools.Internalize
+
+# Test: Happy path
+
+## Setup
+
+Let fromURL = `getClass().getResource("/nbmtools/zip1.zip").toString()`.
+Let toFile = `File.createTempFile("InternalizeTest-", ".nbm")`.
+
+Let ins = a stub of `java.io.InputStream`.
+Let out = `new StubPrintStream()`.
+Let err = `new StubPrintStream()`.
+Let command = `new Internalize()`.
+
+Do `toFile.deleteOnExit()`.
+
+## Verify
+
+Assert `command.run(ins, out, err, fromURL, toFile.path)` is `Command.EXIT_SUCCESS`.
+
+Assert `toFile.length()` is not 0.
 
 # Test: Too few arguments
 
