@@ -18,8 +18,8 @@ class Internalize extends Command {
             case Failure(_) => new FileInputStream(s)
         }
 
-    private def using[T <: Closeable, U](resource: T) ( block: T => U ) =
-        try { block } finally { resource.close }
+    private def using[T <: Closeable, U](resource: T) ( block: T => U ): U =
+        try { block(resource) } finally { resource.close }
 
     override def run(
         in: InputStream, out: PrintStream, err: PrintStream, args: String*): Int = {
