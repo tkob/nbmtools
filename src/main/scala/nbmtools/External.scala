@@ -10,7 +10,7 @@ case class External(crc: Option[Long], urls: List[URI]) {
         def tryUrls(urls: List[URI]): InputStream = {
             urls match {
                 case Nil =>
-                    throw new IOException("cannot open any URL: " + urls.toString)
+                    throw new IOException("cannot open any URL: " + this.toString)
                 case (url::urls) =>
                     try {
                         url.toURL.openStream
