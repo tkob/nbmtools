@@ -24,6 +24,7 @@ class NbmInputStream(is: InputStream) extends ZipInputStream(is) {
             case Some(es) => es.close()
             case None => ()
         }
+        externalStream = None
     }
 
     override def getNextEntry() = {
@@ -38,10 +39,7 @@ class NbmInputStream(is: InputStream) extends ZipInputStream(is) {
                         val entry = createZipEntry(name)
                         entry
                 }
-                case name => {
-                        externalStream = None
-                        originalEntry
-                }
+                case name => originalEntry
             }
     }
 
