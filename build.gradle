@@ -59,7 +59,7 @@ task compileDocy << {
             '-d', ext.classesDir,
             '-basedir', ext.baseDir,
             '-j',
-            '-converter', 'nbmtools,java'
+            '-converter', 'nbmtools'
     ]
     ext.args += ext.sourceSet.getFiles()
 
