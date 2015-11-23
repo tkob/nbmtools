@@ -6,7 +6,7 @@ import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.PrintStream
 import java.net.URL
-import org.apache.commons.io.IOUtils
+import java.util.zip.ZipOutputStream
 import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
@@ -33,8 +33,8 @@ class Internalize extends Command {
                 Command.EXIT_FAILURE
             case Success((fromName, toName)) => {
                 using(new NbmInputStream(openIn(fromName))) { fromStream =>
-                using(new FileOutputStream(toName)) { toStream =>
-                    IOUtils.copy(fromStream, toStream)
+                using(new ZipOutputStream(new FileOutputStream(toName))) { toStream =>
+                    ZipUtils.copy(fromStream, toStream)
                 }}
                 Command.EXIT_SUCCESS
             }
