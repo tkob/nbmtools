@@ -1,6 +1,7 @@
 *[File]: java.io.File
 *[FileInputStream]: java.io.FileInputStream
 *[Paths]: java.nio.file.Paths
+*[URI]: java.net.URI
 *[ZipInputStream]: java.util.zip.ZipInputStream
 *[IOUtils]: org.apache.commons.io.IOUtils
 *[FileEntry]: nbmtools.FileEntry
@@ -12,19 +13,17 @@
 
 ## Setup: create a source zip file with .external entry
 
-Let fromFile = `File.createTempFile("NbmInputStreamTest-from", ".zip")`.
+Let fromFile = a temporary file.
 
-Let url= `getClass().getResource("/nbmtools/text1.txt")`.
+Let uri= resource "text1.txt" as `URI`.
 
-Let content = `"URL:" + url`.
+Let content = `"URL:" + uri`.
 
-Let fileName = `Paths.get(url.toURI()).fileName.toString()`.
+Let fileName = `Paths.get(uri).fileName.toString()`.
 
 Let zipEntry = `new FileEntry(fileName + ".external", content as byte[])`.
 
 Do `TestUtils.createZipFile(fromFile, [zipEntry])`.
-
-Do `fromFile.deleteOnExit()`.
 
 # Verify
 
@@ -37,20 +36,18 @@ where collect =
 
 ## Setup: create a source zip file with .external entry
 
-Let fromFile = `File.createTempFile("NbmInputStreamTest-from", ".zip")`.
+Let fromFile = a temporary file.
 
-Let url= `getClass().getResource("/nbmtools/text1.txt")`.
+Let uri = resource "text1.txt" as `URI`.
 
-Let content = `"URL:" + url`.
+Let content = `"URL:" + uri`.
 
-Let fileName = `Paths.get(url.toURI()).fileName.toString()`.
+Let fileName = `Paths.get(uri).fileName.toString()`.
 
 Let zipEntry1 = `new FileEntry(fileName + "1.external", content as byte[])`
 and zipEntry2 = `new FileEntry(fileName + "2.external", content as byte[])`.
 
 Do `TestUtils.createZipFile(fromFile, [zipEntry1, zipEntry2])`.
-
-Do `fromFile.deleteOnExit()`.
 
 # Verify
 

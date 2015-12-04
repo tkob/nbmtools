@@ -1,5 +1,6 @@
 *[File]: java.io.File
 *[ZipFile]: java.util.zip.ZipFile
+*[InputStream]: java.io.InputStream
 *[ZipInputStream]: java.util.zip.ZipInputStream
 *[ZipOutputStream]: java.util.zip.ZipOutputStream
 *[NbmUtils]: nbmtools.NbmUtils
@@ -9,15 +10,11 @@
 
 ## Setup
 
-Let url = `getClass().getResource("/nbmtools/zip1.zip")`.
-
-Let fromFile = `new File(url.toURI())`.
+Let fromFile = resource "zip1.zip" as `File`.
 
 Let zipFile = `new ZipFile(fromFile)`.
 
-Let toFile = `File.createTempFile("test", ".zip")`.
-
-Do `toFile.deleteOnExit()`.
+Let toFile = a temporary file.
 
 ## Exercise: identity map
 
@@ -31,9 +28,9 @@ Assert that `toFile.length()` is not `0L`.
 
 ## Setup
 
-Let url = `getClass().getResource("/nbmtools/zip1.zip")`.
+Let fromFile = resource "zip1.zip" as `File`.
 
-Let zipFile = `new ZipFile(new File(url.toURI()))`.
+Let zipFile = `new ZipFile(fromFile)`.
 
 Let f = `{ ZipUtils.Entry entry, List list ->
              def zipEntry = entry.zipEntry
@@ -53,7 +50,7 @@ Assert that `ZipUtils.fold(f, [], zipFile)` is `expected`.
 
 ## Setup
 
-Let ins = `getClass().getResourceAsStream("/nbmtools/zip1.zip")`.
+Let ins = resource "zip1.zip" as `InputStream`.
 
 Let zis = `new ZipInputStream(ins)`.
 
@@ -75,14 +72,12 @@ Assert that `ZipUtils.fold(f, [], zis)` is `expected`.
 
 ## Setup
 
-Let fromFile = `new File(getClass().getResource("/nbmtools/zip1.zip").toURI())`.
+Let fromFile = resource "zip1.zip" as `File`.
 
-Let toFile = `File.createTempFile("ZipUtilsTest-copy-to", ".zip")`.
+Let toFile = a temporary file.
 
 Let zis = `new ZipInputStream(new FileInputStream(fromFile))`
 and zos = `new ZipOutputStream(new FileOutputStream(toFile))`.
-
-Do `toFile.deleteOnExit()`.
 
 ## Exercise
 

@@ -7,19 +7,18 @@
 
 ## Setup
 
-Let fromURL = `getClass().getResource("/nbmtools/zip1.zip").toString()`.
-Let toFile = `File.createTempFile("InternalizeTest-", ".nbm")`.
+Let fromURL = resource "zip1.zip".
+Let toFile = a temporary file.
 
 Let ins = a stub of `java.io.InputStream`.
 Let out = `new StubPrintStream()`.
 Let err = `new StubPrintStream()`.
 Let command = `new Internalize()`.
 
-Do `toFile.deleteOnExit()`.
-
 ## Verify
 
-Assert `command.run(ins, out, err, fromURL, toFile.path)` is `Command.EXIT_SUCCESS`.
+Assert `command.run(ins, out, err, fromURL.toString(), toFile.path)` is
+`Command.EXIT_SUCCESS`.
 
 Assert `toFile.length()` is not 0L.
 
@@ -65,7 +64,7 @@ Assert `command.run(ins, out, err, "", "")` throws an instance of
 
 ## Setup
 
-Let fromURL = `getClass().getResource("/nbmtools/zip1.zip").toString()`.
+Let fromURL = resource "zip1.zip".
 
 Let ins = a stub of `java.io.InputStream`.
 Let out = `new StubPrintStream()`.
@@ -74,5 +73,5 @@ Let command = `new Internalize()`.
 
 ## Verify
 
-Assert `command.run(ins, out, err, fromURL, "")` throws an instance of
-`java.io.IOException`.
+Assert `command.run(ins, out, err, fromURL.toString(), "")` throws an instance
+of `java.io.IOException`.

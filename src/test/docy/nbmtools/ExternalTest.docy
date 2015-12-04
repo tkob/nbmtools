@@ -50,7 +50,7 @@ URL:http://www2.example.com/
 # Test: openStream succeeds if the URL is valid
 
 Assert that `ext.openStream() as String` is "content of text1"
-where uri = `getClass().getResource("/nbmtools/text1.txt").toURI()`
+where uri = resource "text1.txt" as `URI`
 and ext = `new External(new Some(0L), [uri] as ScalaList)`.
 
 # Test: openStream fails if there are no URLs
@@ -68,5 +68,5 @@ and ext = `new External(new Some(0L), uris)`.
 
 Assert that `ext.openStream() as String` is "content of text1"
 where url1 = `"file://nosuchuri" as URI`
-and url2 = `getClass().getResource("/nbmtools/text1.txt").toURI()`
+and url2 = resource "text1.txt" as `URI`
 and ext = `new External(new Some(0L), [url1, url2] as ScalaList)`.

@@ -7,15 +7,13 @@
 
 ## Setup
 
-Let fromFile = `new File(getClass().getResource("/nbmtools/zip1.zip").toURI())`.
+Let fromFile = resource "zip1.zip" as `File`.
 
 Let zipFile = `new ZipFile(fromFile)`.
 
 Let entryList = `NbmUtils.toZipEntryList(zipFile)`.
 
-Let toFile = `File.createTempFile("test", ".zip")`.
-
-Do `toFile.deleteOnExit()`.
+Let toFile = a temporary file.
 
 ## Exercise
 
